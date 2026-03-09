@@ -3,9 +3,8 @@ import TablaPedidos from './components/TablaPedidos/TablaPedidos'
 
 function App() {
   return (
-    <>
-    <TablaPedidos></TablaPedidos>
-    </>
+    
+    <TablaPedidos/>
   )
 }
 

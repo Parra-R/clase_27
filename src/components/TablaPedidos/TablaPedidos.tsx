@@ -1,86 +1,75 @@
 import './TablaPedidos.css'
 
-interface Pedido {
+interface Order {
   id: string 
-  cliente: string
+  client: string
   total: number
-  estado: 'Entregado' | 'Pendiente' | 'Cancelado'
+  state: 'Delivered' | 'Pending' | 'Cancel'
 }
 
-const pedidos: Pedido[] = [ 
-  { id: "#ORD-772", cliente: "Maria Casals", total: 125.50, estado: 'Entregado' }, 
-  { id: "#ORD-891", cliente: "Juan Topo", total: 45.00, estado: 'Pendiente' }, 
-  { id: "#ORD-902", cliente: "Sara Vega", total: 210.99, estado: 'Entregado' }, 
-  { id: "#ORD-115", cliente: "Pedro Picapiedra", total: 89.00, estado: 'Cancelado' }, 
+const orders: Order[] = [ 
+  { id: "#ORD-772", client: "Maria Casals", total: 125.50, state: 'Delivered' }, 
+  { id: "#ORD-891", client : "Juan Topo", total: 45.00, state: 'Pending' }, 
+  { id: "#ORD-902", client: "Sara Vega", total: 210.99, state: 'Pending' }, 
+  { id: "#ORD-115", client: "Pedro Picapiedra", total: 89.00, state: 'Cancel' }, 
 ];
 
 const TablaPedidos = () => {
- const getColorEstado = (estado: Pedido["estado"]) => {
-    if (estado === "Entregado") return "bg-green-100 text-green-700"
-    if (estado === "Pendiente") return "bg-yellow-100 text-yellow-700"
-    if (estado === "Cancelado") return "bg-red-100 text-red-700"
-  }
+const colorState = {
+  Delivered: 'bg-green-100 text-green-700 border-green-200',
+  Pending: 'bg-yellow-100 text-yellow-700 border-yellow-200',
+  Cancel: 'bg-red-100 text-red-700 border-red-200'
+}
 
-  return (
-     <div className="p-6 bg-gray-50 min-h-screen flex justify-center items-start">
-      
-      <div className="w-full max-w-3xl bg-white shadow-lg rounded-xl overflow-hidden">
+return (
+  <div className="max-w-4xl mx-auto mt-10 p-4">
+    <h2 className="text-2xl font-bold mb-6 text-gray-800">Orders Admin</h2>
 
-        <div className="px-6 py-4 border-b">
-          <h2 className="text-xl font-semibold text-gray-800">
-            Últimos pedidos
-          </h2>
-        </div>
+    <div className="overflow-hidden rounded-xl border border-gray-200 shadow-sm">
+      <table className="w-full text-left border-collapse bg-white">
 
-        <table className="w-full text-left">
+        <thead className="bg-gray-50 text-gray-600 font-semibold text-sm">
+          <tr>
+            <th className="px-6 py-4">ID Order</th>
+            <th className="px-6 py-4">Client</th>
+            <th className="px-6 py-4">Total</th>
+            <th className="px-6 py-4">State</th>
+          </tr>
+        </thead>
 
-          <thead className="bg-gray-100 text-gray-600 text-sm uppercase">
-            <tr>
-              <th className="px-6 py-3">ID</th>
-              <th className="px-6 py-3">Cliente</th>
-              <th className="px-6 py-3">Total</th>
-              <th className="px-6 py-3">Estado</th>
+        <tbody className="divide-y divide-gray-100 border-t border-gray-100">
+          {orders.map((order) => (
+            <tr key={order.id} className="hover:bg-gray-50 transition-colors">
+              
+              <td className="px-6 py-4 font-medium text-indigo-600">
+                {order.id}
+              </td>
+
+              <td className="px-6 py-4 text-gray-700">
+                {order.client}
+              </td>
+
+              <td className="px-6 py-4 font-bold text-gray-900">
+                {order.total.toFixed(2)}
+              </td>
+
+              <td className="px-6 py-4">
+                {/* Aplicamos la clase dinámica usando el objeto coloresEstado */}
+                <span
+                  className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${colorState[order.state]}`}
+                >
+                  {order.state}
+                </span>
+              </td>
+
             </tr>
-          </thead>
+          ))}
+        </tbody>
 
-          <tbody className="text-gray-700">
-
-            {pedidos.map((pedido) => (
-              <tr
-                key={pedido.id}
-                className="border-t hover:bg-gray-50 transition"
-              >
-                <td className="px-6 py-4 font-medium">
-                  {pedido.id}
-                </td>
-
-                <td className="px-6 py-4">
-                  {pedido.cliente}
-                </td>
-
-                <td className="px-6 py-4">
-                  {pedido.total} €
-                </td>
-
-                <td className="px-6 py-4">
-                  <span
-                    className={`px-3 py-1 text-xs font-semibold rounded-full ${getColorEstado(pedido.estado)}`}
-                  >
-                    {pedido.estado}
-                  </span>
-                </td>
-
-              </tr>
-            ))}
-
-          </tbody>
-
-        </table>
-
-      </div>
-
+      </table>
     </div>
-  )
+  </div>
+)
   
 }
 
