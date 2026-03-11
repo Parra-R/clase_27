@@ -1,7 +1,7 @@
 import './App.css'
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Link, NavLink } from 'react-router-dom'
 import Home from './Pages/Home/Home'
-import { Contact } from './Pages/Contact/Contact'
+import Contact from './Pages/Contact/Contact'
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home/>}></Route>
           <Route path='/contact' element={<Contact />}></Route>
-        /* 404 - Si no encuentra la ruta */
+        {/* 404 - Si no encuentra la ruta */}
         <Route path='*' element={<h2 className='text-red-500'>404 - Not Found</h2>}></Route>
         </Routes>
       </div>
